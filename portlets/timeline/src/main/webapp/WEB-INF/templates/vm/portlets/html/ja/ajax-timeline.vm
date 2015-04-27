@@ -69,6 +69,19 @@
 #ALformfooter()
 </div>
 
+<div class="auiSummaryMeta auiFilter clearfix"><div class="filters floatLeft"><a href="javascript:void(0);" onclick="if(document.getElementById('menubar_auiFilter_1').style.display!='none'){document.getElementById('menubar_auiFilter_1').style.display='none'}else{document.getElementById('menubar_auiFilter_1').style.display='block'}"> <span class="filterTip"><span>すべてのグループ</span></span></a></div>
+<div class="auiSummarySearch">
+#AUISearchHeader("searchForm_" "searchForm_" "$!jslink.getPortletById($!portlet.ID)" "aimluck.io.postViewPage(this, '$!portlet.ID', 'search-${indicator_id3}'); return false;")
+  <input type="hidden" id="baseuri_$!portlet.ID" value='$!jslink.getPortletById($!portlet.ID).addQueryData("template","TimelineScreen")' />
+  <input type="hidden" class="template" name="template" value="TimelineScreen" />
+  <input class="text floatLeft long" type="text" name="keyword" id="q$!{portlet.ID}" value="$!result.targetKeyword" />
+  <button title="検索" class="submit" type="submit"><i class="icon-search"></i></button>
+#AUISearchFooter()
+</div>
+</div>
+
+<div class="searchClearOuter"><a class="searchClear" onclick="return false;" href="javascript:void(0)"><i class="icon-remove"></i>検索結果をクリア</a></div>
+
 <div class="newMessage" id="newMessage_$!portlet.ID" style="display:none; clear:both">
 	<a href="javascript:void(0)" onclick="aipo.timeline.displayIndicator('${actionAllUrl}', '$!{portlet.ID}', '$indicator_id3', '$!{record.GroupName}'); aipo.portletReload('timeline')">$l10n.TIMELINE_NEW_MESSAGE</a>
 </div>

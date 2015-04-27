@@ -167,6 +167,8 @@ public class TimelineSelectData extends
     }
 
     isFileUploadable = ALEipUtils.isFileUploadable(rundata);
+
+    target_keyword = new ALStringField();
   }
 
   /**
@@ -189,6 +191,8 @@ public class TimelineSelectData extends
   public ResultList<EipTTimeline> selectList(RunData rundata, Context context) {
     try {
 
+      target_keyword.setValue(TimelineUtils.getTargetKeyword(rundata, context));
+
       // 指定グループや指定ユーザをセッションに設定する．
       setupLists(rundata, context);
 
@@ -203,7 +207,8 @@ public class TimelineSelectData extends
             current_page,
             getRowsNum(),
             0,
-            useridList);
+            useridList,
+            target_keyword.getValue());
       }
 
       return list;
@@ -232,7 +237,8 @@ public class TimelineSelectData extends
           0,
           0,
           minId,
-          useridList);
+          useridList,
+          null);
 
       return list;
     } catch (Exception ex) {
@@ -370,7 +376,7 @@ public class TimelineSelectData extends
   protected Map<Integer, List<TimelineResultData>> getComments(
       List<Integer> parentIds) {
     List<EipTTimeline> list =
-      TimelineUtils.getTimelineList(uid, parentIds, "T", -1, -1, 0, null);
+      TimelineUtils.getTimelineList(uid, parentIds, "T", -1, -1, 0, null, null);
     Map<Integer, List<TimelineResultData>> result =
       new HashMap<Integer, List<TimelineResultData>>(parentIds.size());
     for (EipTTimeline model : list) {
@@ -389,7 +395,15 @@ public class TimelineSelectData extends
   protected Map<Integer, List<TimelineResultData>> getActivities(
       List<Integer> parentIds) {
     List<EipTTimeline> list =
-      TimelineUtils.getTimelineList(uid, parentIds, "A", -1, -1, 0, useridList);
+      TimelineUtils.getTimelineList(
+        uid,
+        parentIds,
+        "A",
+        -1,
+        -1,
+        0,
+        useridList,
+        null);
 
     Map<Integer, List<TimelineResultData>> result =
       new HashMap<Integer, List<TimelineResultData>>(parentIds.size());
