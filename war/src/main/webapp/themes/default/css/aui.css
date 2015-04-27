@@ -87,8 +87,8 @@ input[type=password], #timelineOuter #inputField,
 #timelineOuter .outer,
 .timelineOuter #inputField,
 .timelineOuter .inputField,
-.timelineOuter .outer, .timeline .commentInputDummy span, .name .avatar, #timelineOuter .newMessage,
-.timelineOuter .newMessage, .timeline .readMore, .filterTip, .auiAbsLayer {
+.timelineOuter .outer, .timeline .commentInputDummy span, .name .avatar,#timelineOuter .searchClearOuter, #timelineOuter .newMessage,
+.timelineOuter .newMessage,.timelineOuter .searchClearOuter, .timeline .readMore, .filterTip, .auiAbsLayer {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
@@ -3906,7 +3906,9 @@ ul.attachments {
 }
 
 #timelineOuter .newMessage,
-.timelineOuter .newMessage {
+#timelineOuter .searchClearOuter,
+.timelineOuter .newMessage,
+.timelineOuter .searchClearOuter {
   background: #f6f6f6;
   text-align: center;
   border: 1px #d2d2d2 solid;
@@ -3914,8 +3916,10 @@ ul.attachments {
 }
 #timelineOuter .newMessage a,
 #timelineOuter .readMore a,
+#timelineOuter .searchClearOuter a,
 .timelineOuter .newMessage a,
-.timelineOuter .readMore a {
+.timelineOuter .readMore a,
+.timelineOuter .searchClearOuter a  {
   display: block;
   padding: 3px;
 }
@@ -3965,6 +3969,33 @@ ul.attachments {
 
 .disabled a {
   color: #666666;
+}
+
+/***************************************************
+	.auiSummarySearch
+--------------------------------------------------*/
+.auiSummaryMeta .auiSummarySearch {
+  float: right;
+}
+.auiSummaryMeta .search .submit:hover [class^="icon-"], .auiSummaryMeta .search .submit:hover [class*=" icon-"] {
+  color: #333;
+}
+
+.searchClear {
+  color: #333 !important;
+  line-height: inherit;
+}
+
+.searchClear [class^="icon-"], .searchClear [class*=" icon-"] {
+  color: #333 !important;
+}
+
+*:first-child + html .auiSummaryMeta .auiSummarySearch .search input[type=text] {
+  width: 210px;
+  overflow: hidden;
+}
+*:first-child + html .auiSummaryMeta .auiSummarySearch .search .submit {
+  width: 30px;
 }
 
 /***************************************************
