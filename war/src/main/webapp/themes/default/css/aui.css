@@ -2849,6 +2849,58 @@ button[disabled]:active {
   margin-bottom: 2em;
 }
 
+/* ------------------------------------------------
+   auiSearch.gray  2015.05.11
+--------------------------------------------------- */
+.auiSearch.gray {
+  position: relative;
+  padding-right: 30px;
+}
+.auiSearch.gray .filterInputField {
+  border: 1px solid #eee;
+}
+.auiSearch.gray input[type="text"] {
+  border-radius: 4px 0 0 4px;
+  padding-left: 7px;
+  min-width: 230px;
+  border-color: #eee;
+  background: #eee;
+  outline: none;
+}
+.auiSearch.gray input[type="text"]:focus {
+  background: #ffffff;
+  border-color: #e5e5e5;
+  box-shadow: none;
+  /* min-width: 320px; */
+}
+.auiSearch.gray button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  border-radius: 0 4px 4px 0;
+  margin-left: -1px;
+  border-color: #eee;
+  border-left-color: #ffffff;
+  background: #eee;
+}
+.auiSearch.gray button:focus {
+  /* background: #ff9900; */
+}
+.auiSearch.gray.focus input[type="text"] {
+  background: #ffffff;
+  border-color: #e5e5e5;
+  box-shadow: none;
+}
+.auiSearch.gray.focus button {
+  background: #ff9900;
+  border-color: #e68a00;
+  text-shadow: none;
+}
+.auiSearch.gray.focus button i {
+  color: #ffffff;
+}
+
 /***************************************************
 	auiSummaryMeta
 --------------------------------------------------*/
