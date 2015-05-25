@@ -72,7 +72,36 @@
 <div class="newMessage" id="newMessage_$!portlet.ID" style="display:none; clear:both">
 	<a href="javascript:void(0)" onclick="aipo.timeline.displayIndicator('${actionAllUrl}', '$!{portlet.ID}', '$indicator_id3', '$!{record.GroupName}'); aipo.portletReload('timeline')">$l10n.TIMELINE_NEW_MESSAGE</a>
 </div>
-
+<div class="auiSummaryMeta auiFilter clearfix">
+	<input type="hidden" value="" id="">
+	<div id="" class="filters floatLeft">
+		<a href="javascript:void(0)" onclick="aipo.timeline.changeDisplay('$!{portlet.ID}');">
+			 <span class="tlDisplayGroup filterTip" id="tlDisplayGroup_$!{portlet.ID}">
+			 	#if("$!{result.TargetGroupName}" == "all")
+							$l10n.TIMELINE_ALL_GROUP
+						#else
+						#foreach( $record in $result.MyGroupList)
+						#if("$!{result.TargetGroupName}" == "$!{record.Name.toString()}")
+						$!record.AliasName
+						#end
+						#end
+						#foreach($record in $result.PostMap)
+						#if("$!{result.TargetGroupName}" == "$!{record.GroupName.Value}")
+						$!record.PostName
+						#end
+						#end
+						#end
+			 </span>
+		</a>
+	</div>
+   <div class="auiSummarySearch">
+        <form class="auiSearch gray" action="">
+          <input type="hidden" id="baseuri_$!portlet.ID" value='$!jslink.getPortletById($!portlet.ID).addQueryData("template","TimelineScreen")' />
+          <input type="hidden" class="template" id="roomSearch" name="template" value="TimelineScreen" />
+          <input type="text" placeholder="タイムライン検索" name="keyword" id="q$!{portlet.ID}" value="$!result.targetKeyword"><button type="submit"><i class="icon-search"></i></button>
+        </form>
+   </div>
+</div>
 #if($result.List.size() == 0)
 		<div class="tlDisplayChanger">
 			<div class="btn">
