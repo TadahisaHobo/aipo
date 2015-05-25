@@ -71,10 +71,23 @@
 <div class="newMessage" id="newMessage_$!portlet.ID" style="display:none; clear:both">
 	<a href="javascript:void(0)" onclick="aipo.timeline.displayIndicator('${actionAllUrl}', '$!{portlet.ID}', '$indicator_id3', '$!{record.GroupName}'); aipo.portletReload('timeline')">$l10n.TIMELINE_NEW_MESSAGE</a>
 </div>
-
+<div class="auiSummaryMeta auiFilter clearfix">
+	<input type="hidden" value="" id="">
+	<div id="" class="filters floatLeft">
+		<a href="javascript:void(0);" onclick="if(document.getElementById('menubar_auiFilter_1').style.display!='none'){document.getElementById('menubar_auiFilter_1').style.display='none'}else{document.getElementById('menubar_auiFilter_1').style.display='block'}">
+			 <span class="filterTip"><span>すべてのグループ</span></span>
+		</a>
+	</div>
+   <div class="auiSummarySearch">
+        <form class="auiSearch gray" action="">
+          <input type="text" placeholder="タイムライン検索" value=""><button type="submit"><i class="icon-search"></i></button>
+        </form>
+   </div>
+</div>
 #if($result.List.size() == 0)
 		<div class="tlDisplayChanger">
 			<div class="btn">
+             <i class="indicator"></i>
 				#ALajaxIndicator("$indicator_id3" "$!portlet.ID" "&nbsp;")
 				<a href="javascript:void(0)" onclick="aipo.timeline.changeDisplay('$!{portlet.ID}');">
 					<span class="tlDisplayGroup" id="tlDisplayGroup_$!{portlet.ID}">
@@ -117,43 +130,7 @@
 		</div>
 	</div>
 #else
-  	<div class="tlDisplayChanger">
-		<div class="btn">
-			#ALajaxIndicator("$indicator_id3" "$!portlet.ID" "&nbsp;")
-			<a href="javascript:void(0)" onclick="aipo.timeline.changeDisplay('$!{portlet.ID}');">
-				<span class="tlDisplayGroup" id="tlDisplayGroup_$!{portlet.ID}">
-				#if("$!{result.TargetGroupName}" == "all")
-					$l10n.TIMELINE_ALL_GROUP
-				#else
-				#foreach( $record in $result.MyGroupList)
-				#if("$!{result.TargetGroupName}" == "$!{record.Name.toString()}")
-                	$!record.AliasName
-				#end
-            	#end
-				#foreach($record in $result.PostMap)
-				#if("$!{result.TargetGroupName}" == "$!{record.GroupName.Value}")
-					$!record.PostName
-				#end
-				#end
-				#end
-                </span>
-			</a>
-		</div>
-		<div class="menubar" id="menubar_tlDisplayChanger_$!{portlet.ID}" style="display: none; ">
-			<ul>
-			#set($actionAllUrl = $!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TimelineScreen").addQueryData("target_group_name", "all")))
-				<li><a href="javascript:void(0)" class="PostName_$!{portlet.ID} #if("$!{result.TargetGroupName}" == "all")selected#end" id="PostName_$!{portlet.ID}_$!{record.GroupName}" onclick="aipo.timeline.displayIndicator('${actionAllUrl}', '$!{portlet.ID}', '$indicator_id3', '$!{record.GroupName}');">$l10n.TIMELINE_ALL_GROUP</a></li>
-			#foreach( $record in $result.MyGroupList)
-			#set($actionmygroupUrl = $!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TimelineScreen").addQueryData("target_group_name", "$!{record.Name.toString()}")))
-				<li><a href="javascript:void(0)" class="PostName_$!{portlet.ID} #if("$!{result.TargetGroupName}" == "$!{record.Name.toString()}")selected#end" id="PostName_$!{portlet.ID}_$!{record.Name.toString()}" onclick="aipo.timeline.displayIndicator('${actionmygroupUrl}', '$!{portlet.ID}', '$indicator_id3', '$!{record.Name.toString()}');">$!record.AliasName</a></li>
-			#end
-			#foreach($record in $result.PostMap)
-		    #set($actionUrl = $!utils.escapeXML($!jslink.getPortletById($!portlet.ID).addQueryData("template","TimelineScreen").addQueryData("target_group_name", "$!{record.GroupName}")))
-				<li><a href="javascript:void(0)" class="PostName_$!{portlet.ID} #if("$!{result.TargetGroupName}" == "$!{record.GroupName.Value}")selected#end" id="PostName_$!{portlet.ID}_$!{record.GroupName}" onclick="aipo.timeline.displayIndicator('${actionUrl}', '$!{portlet.ID}', '$indicator_id3', '$!{record.GroupName}');">$!record.PostName</a></li>
-			#end
-			</ul>
-		</div>
-	</div><div id="messageDivList_$!portlet.ID"></div>
+<div id="messageDivList_$!portlet.ID"></div>
   #if($result.ContentHeightMax == 0)
     <div id="timeline_$!{portlet.ID}" class="timeline">
   #else
