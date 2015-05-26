@@ -31,3 +31,4 @@
 #parse("/portlets/html/ja/ajax-msgboard-category-list.vm")
 #ALcontentfooter()
 ##parse("/portlets/html/ja/msgboard-menu.vm")
+これはテストです
