@@ -838,6 +838,7 @@ public class TimelineUtils {
   public static Document getDocument(String string, String defaultCharset) {
     DOMParser parser = new DOMParser();
     try {
+      string = string.replace(" ", "%20");
       URL url = new URL(string);
       HttpURLConnection con = ALURLConnectionUtils.openUrlConnection(url);
       con.setConnectTimeout(10000);
