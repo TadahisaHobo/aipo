@@ -926,22 +926,6 @@ public class TimelineUtils {
   }
 
   /**
-   * @param i
-   * @param indexOf
-   * @return
-   */
-  private static String substring(int i, int indexOf) {
-    return null;
-  }
-
-  /**
-   * @return
-   */
-  private static String subString() {
-    return null;
-  }
-
-  /**
    * 読み込んだdocumentからmetaタグ内のcharset属性を読み取るメソッド
    *
    * @param document
