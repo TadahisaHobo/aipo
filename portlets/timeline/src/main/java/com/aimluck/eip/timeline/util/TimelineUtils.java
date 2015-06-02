@@ -838,6 +838,9 @@ public class TimelineUtils {
   public static Document getDocument(String string, String defaultCharset) {
     DOMParser parser = new DOMParser();
     try {
+      if (string.indexOf(" ") != -1) {
+        string = string.substring(0, string.indexOf(" "));
+      }
       URL url = new URL(string);
       HttpURLConnection con = ALURLConnectionUtils.openUrlConnection(url);
       con.setConnectTimeout(10000);
@@ -920,6 +923,22 @@ public class TimelineUtils {
       logger.error("[TimelineUtils]", ex);
       return null;
     }
+  }
+
+  /**
+   * @param i
+   * @param indexOf
+   * @return
+   */
+  private static String substring(int i, int indexOf) {
+    return null;
+  }
+
+  /**
+   * @return
+   */
+  private static String subString() {
+    return null;
   }
 
   /**
