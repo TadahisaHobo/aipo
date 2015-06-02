@@ -21,6 +21,7 @@ package com.aimluck.eip.modules.screens;
 import org.apache.jetspeed.services.logging.JetspeedLogFactoryService;
 import org.apache.jetspeed.services.logging.JetspeedLogger;
 import org.apache.turbine.util.RunData;
+import org.apache.turbine.util.StringUtils;
 import org.apache.velocity.context.Context;
 
 import com.aimluck.eip.timeline.TimelineSelectData;
@@ -29,7 +30,7 @@ import com.aimluck.eip.util.ALEipUtils;
 
 /**
  * タイムライントピックの一覧を処理するクラスです。
- * 
+ *
  */
 public class TimelineScreen extends ALVelocityScreen {
 
@@ -38,7 +39,7 @@ public class TimelineScreen extends ALVelocityScreen {
     .getLogger(TimelineScreen.class.getName());
 
   /**
-   * 
+   *
    * @param rundata
    * @param context
    * @throws Exception
@@ -60,8 +61,32 @@ public class TimelineScreen extends ALVelocityScreen {
       if (rundata.getUserAgent().trim().indexOf("Mac") != -1) {
         context.put("isMacOS", "true");
       }
+      String keyword = null;
+      try {
+        keyword = rundata.getParameters().getString("k");
+      } catch (Throwable ignore) {
+        // ignore
+      }
+      Integer cursor = null;
+      try {
+        cursor = rundata.getParameters().getInt("c");
+      } catch (Throwable ignore) {
+        // ignore
+      }
       TimelineSelectData listData = new TimelineSelectData();
       listData.initField();
+
+      if (!StringUtils.isEmpty(keyword)) {
+        listData.setKeyword(keyword);
+      }
+
+      if (!StringUtils.isEmpty(keyword)) {
+        listData.setKeyword(keyword);
+        context.put("isSearch", true);
+      } else {
+        context.put("isSearch", false);
+      }
+
       listData.setContentHeightMax(Integer.parseInt(ALEipUtils.getPortlet(
         rundata,
         context).getPortletConfig().getInitParameter("p1a-rows", "0")));

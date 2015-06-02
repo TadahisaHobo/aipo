@@ -132,7 +132,7 @@ public class TimelineUtils {
   public static final String TIMELIME_PORTLET_NAME = "Timeline";
 
   /** 検索キーワード変数の識別子 */
-  public static final String TARGET_KEYWORD = "keyword";
+  public static final String KEYWORD = "keyword";
 
   /**
    * トピックに対する返信数を返します
@@ -1070,7 +1070,7 @@ public class TimelineUtils {
 
   public static ResultList<EipTTimeline> getTimelineList(Integer userId,
       List<Integer> parentIds, String type, int page, int limit, int minId,
-      List<Integer> userIds) {
+      List<Integer> userIds, String keywordParam) {
 
     if (parentIds == null || parentIds.size() == 0) {
       return new ResultList<EipTTimeline>(
@@ -1139,6 +1139,15 @@ public class TimelineUtils {
       }
       body.append(")");
       body.append(")");
+    }
+
+    if ((keywordParam != null) && (!keywordParam.equals(""))) {
+      // 選択したキーワードを指定する．
+      String keyword = "%" + keywordParam + "%";
+      body.append(" AND ");
+      body.append("eip_t_timeline.note LIKE '");
+      body.append(keyword);
+      body.append("' ");
     }
 
     StringBuilder last = new StringBuilder();

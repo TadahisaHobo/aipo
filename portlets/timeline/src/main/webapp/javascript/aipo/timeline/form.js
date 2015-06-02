@@ -659,23 +659,105 @@ aipo.timeline.setMinHeight = function(pid) {
 	}
 	dojo.byId("message_" + pid).style.minHeight = min + "px";
 }
-aipo.timeline.changeDisplayCallback = function(pid) {
-	if (dojo.byId('menubar_tlDisplayChanger_' + pid).style.display == 'none') {
-		dojo.byId('menubar_tlDisplayChanger_' + pid).style.display = 'block';
-	} else {
-		dojo.byId('menubar_tlDisplayChanger_' + pid).style.display = 'none';
-	}
+//aipo.timeline.changeDisplayCallback = function(pid) {
+//	if (dojo.byId('menubar_tlDisplayChanger_' + pid).style.display == 'none') {
+//		dojo.byId('menubar_tlDisplayChanger_' + pid).style.display = 'block';
+//	} else {
+//		dojo.byId('menubar_tlDisplayChanger_' + pid).style.display = 'none';
+//	}
+//}
+//
+//aipo.timeline.changeDisplay = function(pid) {
+//	if (dojo.byId('menubar_tlDisplayChanger_' + pid).style.display == 'none') {
+//		setTimeout(function() {
+//			aipo.timeline.changeDisplayCallback(pid);
+//		}, 0);
+//	} else {
+//		aipo.timeline.changeDisplayCallback(pid);
+//	}
+//}
+
+aipo.timeline.toggleMenu=function (node,filters,event){
+	var rect=filters.getBoundingClientRect();
+	var html=document.documentElement.getBoundingClientRect();
+	if (node.style.display == "none") {
+        dojo.query("div.menubar").style("display", "none");
+
+        var scroll={
+        	left:document.documentElement.scrollLeft||document.body.scrollLeft,
+        	top:document.documentElement.scrollTop||document.body.scrollTop
+        };
+        node.style.opacity="0";
+        setTimeout( function(){
+			dojo.style(node, "display" , "block");
+		}, 0);
+        if(html.right-node.clientWidth>rect.left){
+       		node.style.left=rect.left+scroll.left+"px";
+        }else{
+        	node.style.left=rect.right-node.clientWidth+scroll.left+"px";
+        }
+         if(html.bottom-node.clientHeight>rect.bottom||event){
+       		node.style.top=rect.bottom+scroll.top+"px";
+        }else{
+        	node.style.top=rect.top-node.clientHeight+scroll.top+"px";
+        }
+        node.style.opacity="";
+    } else {
+        dojo.query("div.menubar").style("display", "none");
+    }
+};
+
+/**
+ * 指定したフィルタにデフォルト値を設定する。(または消す)
+ * @param portlet_id
+ * @param thisnode
+ * @param event
+ */
+aipo.timeline.filterSetDefault=function(portlet_id,type){
+	var ul=dojo.query("ul.filtertype[data-type="+type+"]")[0];
+	var defval=ul.getAttribute("data-defaultparam");
+	var defaultli=dojo.query("li[data-param="+defval+"]",ul);
+	aipo.timeline.filterSelect(ul,defaultli);
+	aipo.timeline.filteredSearch(portlet_id);
+};
+
+aipo.timeline.filterSelect=function(ul,li){
+	dojo.query("li",ul).removeClass("selected");
+	dojo.query(li).addClass("selected");
+};
+
+/**
+ * フィルタを選択した時に発生させるイベント　クリックされたノードをフィルタに追加
+ * @param portlet_id
+ * @param thisnode
+ * @param event
+ */
+aipo.timeline.filterClick=function(portlet_id,thisnode,event){
+	var li=thisnode.parentNode;
+	var ul=li.parentNode;
+	var param=li.getAttribute("data-param");//liのdata-param
+	aipo.timeline.filterSelect(ul,li);
+	aipo.timeline.filteredSearch(portlet_id);
+};
+
+aipo.timeline.onLoadTimelineDialog = function(portlet_id){
+  var url_userlist = dojo.byId('urlUserlist'+portlet_id).value;
+  var login_user_id = dojo.byId('loginUser'+portlet_id).value;
+  var timeline_user_id = dojo.byId('timelineUser'+portlet_id).value;
+
+  if(timeline_user_id == 0) {
+      timeline_user_id = login_user_id;
+  }
+  if(url_userlist){
+      aipo.timeline.changeGroup(url_userlist, 'LoginUser', timeline_user_id);
+  }
+
+  var obj = dojo.byId("timeline_name");
+  if(obj){
+     obj.focus();
+  }
 }
 
-aipo.timeline.changeDisplay = function(pid) {
-	if (dojo.byId('menubar_tlDisplayChanger_' + pid).style.display == 'none') {
-		setTimeout(function() {
-			aipo.timeline.changeDisplayCallback(pid);
-		}, 0);
-	} else {
-		aipo.timeline.changeDisplayCallback(pid);
-	}
-}
 
 aipo.timeline.getNewMessage = function(url, pid) {
 	var obj_message = dojo.byId('newMessage_' + pid);
@@ -709,19 +791,19 @@ aipo.timeline.getNewMessage = function(url, pid) {
 	}
 }
 
-aipo.timeline.displayIndicator = function(url, portletId, indicator_id, post) {
-	dojo.byId("tlDisplayGroup_" + portletId).innerHTML = dojo.byId("PostName_"
-			+ portletId + "_" + post).innerHTML;
-
-	var obj_indicator = dojo.byId(indicator_id + portletId);
-	if (obj_indicator) {
-		dojo.style(obj_indicator, "display", "");
-	}
-
-	aipo.viewPage(url, portletId);
-
-	obj_indicator = dojo.byId(indicator_id + portletId);
-}
+//aipo.timeline.displayIndicator = function(url, portletId, indicator_id, post) {
+//	dojo.byId("tlDisplayGroup_" + portletId).innerHTML = dojo.byId("PostName_"
+//			+ portletId + "_" + post).innerHTML;
+//
+//	var obj_indicator = dojo.byId(indicator_id + portletId);
+//	if (obj_indicator) {
+//		dojo.style(obj_indicator, "display", "");
+//	}
+//
+//	aipo.viewPage(url, portletId);
+//
+//	obj_indicator = dojo.byId(indicator_id + portletId);
+//}
 
 aipo.timeline.displayIndicatorNotViewPage = function(portletId, indicator_id) {
 	var obj_indicator = dojo.byId(indicator_id + portletId);
